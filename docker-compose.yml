@@ -144,12 +144,12 @@ services:
       - user-feeds-service
       - feed-requests-service
     ports:
-      - "8000:8000"
+      - "8005:8005"
     env_file:
       - ./.env.prod
     environment:
       - BACKEND_API_NODE_ENV=local
-      - BACKEND_API_PORT=8000
+      - BACKEND_API_PORT=8005
       - BACKEND_API_DEFAULT_MAX_FEEDS=999999
       - BACKEND_API_USER_FEEDS_API_HOST=http://user-feeds-service:5000
       - BACKEND_API_FEED_REQUESTS_API_HOST=http://feed-requests-api:5000
