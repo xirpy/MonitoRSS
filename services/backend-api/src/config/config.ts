@@ -30,7 +30,7 @@ export default function config(options?: {
 
   const configVals: EnvironmentVariables = {
     NODE_ENV: (process.env.NODE_ENV as Environment) || Environment.Local,
-    BACKEND_API_PORT: isNaN(port) ? 3000 : port,
+    BACKEND_API_PORT: isNaN(port) ? 3009 : port,
     BACKEND_API_DISCORD_BOT_TOKEN: process.env
       .BACKEND_API_DISCORD_BOT_TOKEN as string,
     BACKEND_API_DISCORD_CLIENT_ID: process.env

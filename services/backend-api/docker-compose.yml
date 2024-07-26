@@ -16,8 +16,7 @@ services:
     depends_on:
       - mrss-mongo
     ports:
-      - "8000:8000"
-    env_file: .env.local
+      - "6005:6005"
     environment:
       - NODE_ENV=local
       - BACKEND_API_MONGODB_URI=mongodb://mrss-mongo:27017/rss

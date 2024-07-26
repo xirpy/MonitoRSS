@@ -298,10 +298,10 @@ services:
       - user-feeds-service
       - feed-requests-service
     ports:
-      - "8000:8000"
+      - "6005:6005"
     environment:
       - BACKEND_API_NODE_ENV=local
-      - BACKEND_API_PORT=8000
+      - BACKEND_API_PORT=6005
       - BACKEND_API_MONGODB_URI=mongodb://mongo:27017/rss
       - BACKEND_API_USER_FEEDS_API_HOST=http://user-feeds-service:5000
       - BACKEND_API_FEED_REQUESTS_API_HOST=http://feed-requests-api:5000
@@ -320,13 +320,13 @@ services:
       target: build
     restart: on-failure:5
     ports:
-      - "3000:3000"
+      - "3009:3009"
     expose:
-      - "3000"
+      - "3009"
     environment:
       - NODE_ENV=local
       - HOST=0.0.0.0
-      - API_PROXY_URL=http://web-api:8000
+      - API_PROXY_URL=http://web-api:6005
       - VITE_USE_POLLING=true
     depends_on:
       - web-api

@@ -9,15 +9,13 @@ services:
       context: services/bot-presence
       dockerfile: Dockerfile
       target: prod
-    command: ["node", "dist/main.js"]
-    env_file:
-      - ./.env.prod
+    command: [ "node", "dist/main.js" ]
 
   feed-requests-redis-cache:
     extends:
       file: ./docker-compose.base.yml
       service: feed-requests-redis-cache
-  
+
   rabbitmq-broker:
     extends:
       file: ./docker-compose.base.yml
@@ -27,12 +25,12 @@ services:
     extends:
       file: ./docker-compose.base.yml
       service: mongo
-  
+
   feed-requests-postgres-db:
     extends:
       file: ./docker-compose.base.yml
       service: feed-requests-postgres-db
-      
+
   user-feeds-postgres-db:
     extends:
       file: ./docker-compose.base.yml
@@ -46,9 +44,7 @@ services:
       context: services/discord-rest-listener
       dockerfile: Dockerfile
       target: prod
-    command: ["node", "build/app.js"]
-    env_file:
-      - ./.env.prod
+    command: [ "node", "build/app.js" ]
 
   feed-requests-service:
     extends:
@@ -58,9 +54,7 @@ services:
       context: services/feed-requests
       dockerfile: Dockerfile
       target: prod
-    command: ["node", "dist/main.js"]
-    env_file:
-      - ./.env.prod
+    command: [ "node", "dist/main.js" ]
     environment:
       - NODE_ENV=production
 
@@ -72,9 +66,7 @@ services:
       context: services/feed-requests
       dockerfile: Dockerfile
       target: prod
-    command: ["node", "dist/main.js"]
-    env_file:
-      - ./.env.prod
+    command: [ "node", "dist/main.js" ]
     environment:
       - NODE_ENV=production
 
@@ -87,8 +79,6 @@ services:
       dockerfile: Dockerfile
       target: build
     command: "npm run migration:local:up"
-    env_file:
-      - ./.env.prod
 
   user-feeds-service:
     extends:
@@ -98,16 +88,12 @@ services:
       context: services/user-feeds
       dockerfile: Dockerfile
       target: prod
-    command: ["node", "dist/main.js"]
-    env_file:
-      - ./.env.prod
+    command: [ "node", "dist/main.js" ]
 
   user-feeds-postgres-migration:
     extends:
       file: ./docker-compose.base.yml
       service: user-feeds-postgres-migration
-    env_file:
-      - ./.env.prod
 
   legacy-feed-bulk-converter-service:
     extends:
@@ -117,9 +103,7 @@ services:
       context: services/backend-api
       dockerfile: dockerfiles/legacy-feed-bulk-converter/Dockerfile
       target: prod
-    command: ["node", "dist/scripts/legacy-feed-bulk-converter.js"]
-    env_file:
-      - ./.env.prod
+    command: [ "node", "dist/scripts/legacy-feed-bulk-converter.js" ]
 
   schedule-emitter-service:
     extends:
@@ -129,9 +113,7 @@ services:
       context: services/backend-api
       dockerfile: dockerfiles/schedule-emitter/Dockerfile
       target: prod
-    command: ["node", "dist/scripts/schedule-emitter.js"]
-    env_file:
-      - ./.env.prod
+    command: [ "node", "dist/scripts/schedule-emitter.js" ]
 
   monolith:
     build:
@@ -144,12 +126,10 @@ services:
       - user-feeds-service
       - feed-requests-service
     ports:
-      - "8000:8000"
-    env_file:
-      - ./.env.prod
+      - "6005:6005"
     environment:
       - BACKEND_API_NODE_ENV=local
-      - BACKEND_API_PORT=8000
+      - BACKEND_API_PORT=6005
       - BACKEND_API_DEFAULT_MAX_FEEDS=999999
       - BACKEND_API_USER_FEEDS_API_HOST=http://user-feeds-service:5000
       - BACKEND_API_FEED_REQUESTS_API_HOST=http://feed-requests-api:5000
@@ -158,15 +138,17 @@ services:
       - BACKEND_API_USER_FEEDS_API_KEY=user-feeds-api-key
       - BACKEND_API_FEED_REQUESTS_API_KEY=feed-requests-api-key
       - LOG_LEVEL=info
-    command: ["node", "dist/main.js"]
+    command: [ "node", "dist/main.js" ]
     networks:
       - monitorss-default
 
-
 volumes:
   mongodb-data:
+    driver: local
   feed-requests-postgres-data:
+    driver: local
   user-feeds-postgres-data:
+    driver: local
   feed-requests-redis-data:
     driver: local
 

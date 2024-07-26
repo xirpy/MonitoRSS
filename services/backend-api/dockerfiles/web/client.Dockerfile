@@ -32,7 +32,7 @@ COPY --from=build /usr/src/app/package*.json ./
 COPY --from=build /usr/src/app/node_modules node_modules
 COPY --from=build /usr/src/app/dist dist
 
-ENV BACKEND_API_PORT=3000
-HEALTHCHECK --interval=5s --timeout=10s --retries=3 CMD wget http://localhost:3000 -q -O - > /dev/null 2>&1
+ENV BACKEND_API_PORT=3009
+HEALTHCHECK --interval=5s --timeout=10s --retries=3 CMD wget http://localhost:3009 -q -O - > /dev/null 2>&1
 
 CMD [ "node", "./dist/main" ]
